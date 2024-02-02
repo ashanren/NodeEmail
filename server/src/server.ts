@@ -17,7 +17,7 @@ const server = app({
 });
 
 const host = "0.0.0.0";
-const port: number = Number(process.env.PORT) || 3000;
+const port: number = Number(process.env.PORT) || 5000;
 
 
 (async () => {
@@ -49,7 +49,7 @@ const port: number = Number(process.env.PORT) || 3000;
     next();
   });
 
-  server.addHook("onResponse", (req, res, next) => {
+  server.addHook("onResponse", (req, res, _next) => {
     let timer = res.getResponseTime() + "ms";
     logger.info({url: req.raw.url, statusCode: res.raw.statusCode, timer}, "request completed");
   });

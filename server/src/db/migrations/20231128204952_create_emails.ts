@@ -8,6 +8,7 @@ export async function up(knex: Knex): Promise<void> {
     //table.string("from").notNullable();
     table.integer('email_settings_id').unsigned().notNullable();
     table.foreign('email_settings_id').references('email_settings.id').onDelete('CASCADE');
+    table.string("from").notNullable();
     table.string("to").notNullable();
     table.string("cc");
     table.string("bcc");
