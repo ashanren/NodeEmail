@@ -1,0 +1,46 @@
+services:
+#  postgres:
+#    image: postgres
+#    container_name: database
+#    restart: unless-stopped
+#    networks:
+#      - email_net
+#    ports:
+#      - 5432:5432
+#    tty: true
+#    stdin_open: true
+#    environment:
+#      - POSTGRES_DB=email
+#      - POSTGRES_USER=email
+#      - POSTGRES_PASSWORD=secret
+#    volumes:
+#      - email_db:/var/lib/postgresql/data
+#    healthcheck:
+#      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+#      start_period: 10s
+  server:
+    build:
+      context: .
+      target: production
+    image: email
+    container_name: email
+    restart: always
+    networks:
+      - email_net
+    ports:
+      - 7000:7000
+    environment:
+      - PORT=7000
+networks:
+  email_net:
+    name: email_net
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: email_net
+volumes:
+  email_db:
+    driver: local
+    name: email

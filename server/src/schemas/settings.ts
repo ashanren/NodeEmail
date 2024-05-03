@@ -1,5 +1,10 @@
 import { Type, Static } from "@sinclair/typebox";
 
+const settingsFilterSchema = Type.Partial(Type.Object({
+  id: Type.Number(),
+  host: Type.String(),
+  user: Type.String(),
+}));
 const settingsSchema = Type.Object({
   host: Type.String(),
   port: Type.Number(),
@@ -9,6 +14,10 @@ const settingsSchema = Type.Object({
   //secure: Type.Optional(Type.Enum({1, 2}))
 });
 
-type Settings = Static<typeof settingsSchema>;
+const updateSettingsSchema = Type.Partial(settingsSchema);
 
-export { settingsSchema, Settings };
+type Settings = Static<typeof settingsSchema>;
+type UpdateSettings = Static<typeof updateSettingsSchema>;
+type SettingsFilter = Static<typeof settingsFilterSchema>;
+
+export { settingsSchema, updateSettingsSchema, Settings, UpdateSettings, settingsFilterSchema, SettingsFilter };

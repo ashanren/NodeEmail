@@ -1,11 +1,15 @@
 import { FastifyInstance } from "fastify";
 import * as EmailSettingsService from "./../services/email_settings.service";
-import { settingsSchema, Settings } from "./../schemas/settings";
+import { settingsSchema, Settings, UpdateSettings, updateSettingsSchema, settingsFilterSchema } from "./../schemas/settings";
 import { idSchema, Id, idsQuerySchema, IdsQuery } from "./../schemas/generic";
 
 export default async (app: FastifyInstance) => {
-  app.get('/', (_req, _res) => {
-    return EmailSettingsService.get();
+  app.get('/', { schema: {
+    querystring: settingsFilterSchema,
+  }
+
+  }, (req, _res) => {
+    return EmailSettingsService.get(req.query);
   });
 
   app.post<{Body: Settings}>('/', { schema: {
@@ -14,9 +18,9 @@ export default async (app: FastifyInstance) => {
     return EmailSettingsService.add(req.body);
   });
 
-  app.put<{Params: Id, Body: Settings}>('/:id', { schema: {
+  app.put<{Params: Id, Body: UpdateSettings}>('/:id', { schema: {
     params: idSchema,
-    body: settingsSchema,
+    body: updateSettingsSchema,
   }}, (req, _res) => {
     return EmailSettingsService.update(req.params.id, req.body);
   });
