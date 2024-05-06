@@ -1,7 +1,7 @@
 import { Type, Static } from "@sinclair/typebox";
 
 const emailSchema = Type.Object({
-  to: Type.String(),
+  to: Type.Union([Type.String(), Type.Array(Type.String())]),
   subject: Type.String(),
   cc: Type.Optional(Type.String()),
   bcc: Type.Optional(Type.String()),

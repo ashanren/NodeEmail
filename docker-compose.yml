@@ -1,0 +1,20 @@
+services:
+  server:
+    build:
+      context: .
+      target: production
+    image: email
+    container_name: email
+    restart: always
+    networks:
+      - email_net
+    ports:
+      - 7000:7000
+    environment:
+      - PORT=7000
+networks:
+  email_net:
+    name: email_net
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: email_net
