@@ -1,11 +1,8 @@
 
 import crypto from "crypto";
 import app from "./app";
-import db, { run_migrations } from "./db/db";
-import { sql } from "kysely";
 import logger from "./config/logger";
 import context from "./config/context";
-import { sleep } from "./utils/helper";
 
 const server = app({
   logger,
@@ -23,19 +20,6 @@ const port: number = Number(process.env.PORT) || 5000;
 
 (async () => {
 
-  const sleep_count = 2;
-  while (true) {
-    try {
-      await sql`SELECT 1;`.execute(db);
-      logger.info("DB connected.");
-      break;
-    } catch (err) {
-      logger.error(err);
-      logger.warn(`DB not connected yet. Trying again in ${sleep_count}`);
-      await sleep(sleep_count);
-    }
-
-  }
   server.addHook("onRoute", (routeOptions) => {
     logger.trace(`METHOD: ${routeOptions.method}, PATH: ${routeOptions.path}`);
   });
@@ -55,8 +39,6 @@ const port: number = Number(process.env.PORT) || 5000;
     logger.info({url: req.raw.url, statusCode: res.raw.statusCode, timer}, "request completed");
   });
 
-  await run_migrations();
   await server.listen({host, port });
-
 })();
 

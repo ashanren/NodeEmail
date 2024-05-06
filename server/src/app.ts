@@ -2,7 +2,6 @@ import { TypeBoxTypeProvider, TypeBoxValidatorCompiler } from "@fastify/type-pro
 import fastify, { FastifyServerOptions } from "fastify";
 import helmet from "@fastify/helmet";
 import router from "./router";
-import { DatabaseError } from "pg";
 
 const build_app = (opt: FastifyServerOptions = {}) => {
   const app = fastify(opt).withTypeProvider<TypeBoxTypeProvider>();
@@ -12,6 +11,7 @@ const build_app = (opt: FastifyServerOptions = {}) => {
   //Set router
   app.register(router);
 
+  /*
   app.setErrorHandler((error, _req, res) => {
     if (error instanceof DatabaseError) {
       let message = '';
@@ -27,6 +27,7 @@ const build_app = (opt: FastifyServerOptions = {}) => {
 
     return res.status(500).send(error);
   });
+  */
 
   return app;
 }

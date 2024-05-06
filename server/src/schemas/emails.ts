@@ -1,7 +1,6 @@
 import { Type, Static } from "@sinclair/typebox";
 
 const emailSchema = Type.Object({
-  email_settings_id: Type.Number(),
   to: Type.String(),
   subject: Type.String(),
   cc: Type.Optional(Type.String()),
