@@ -6,6 +6,7 @@ import context from "./config/context";
 
 const server = app({
   logger,
+  bodyLimit: 1048576 * (Number(process.env.REQUEST_SIZE) || 1),
   disableRequestLogging: true,
   requestIdHeader: false,
   requestIdLogLabel: "requestId",

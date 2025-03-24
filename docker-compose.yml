@@ -3,7 +3,7 @@ services:
     build:
       context: .
       target: production
-    image: email
+    image: email:1.1
     container_name: email
     restart: always
     networks:
