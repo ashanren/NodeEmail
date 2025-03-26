@@ -1,0 +1,27 @@
+services:
+  dev:
+    build:
+      context: .
+      target: non_root_dev
+    image: email:dev
+    container_name: server
+    restart: always
+    networks:
+      - email_net
+    ports:
+      - 5000:5000
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./../:/opt/app
+      - ~/.ssh:/home/dev/.ssh
+networks:
+  email_net:
+    name: email_net
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: email_net
+volumes:
+  email_db:
+    driver: local
+    name: email

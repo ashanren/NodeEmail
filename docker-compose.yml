@@ -1,14 +1,20 @@
-version: "3.7"
 services:
-  email:
-    build: 
+  server:
+    build:
       context: .
-      dockerfile: Dockerfile
-    image: email
+      target: production
+    image: email:1.1
     container_name: email
+    restart: always
+    networks:
+      - email_net
     ports:
-      - 3002:3000
+      - 7000:7000
     environment:
-      NODE_ENV: production
-      USER: Alerts49876@gmail.com
-      PASS: 4?6*GBa@^z7mnUC&5h6
+      - PORT=7000
+networks:
+  email_net:
+    name: email_net
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: email_net

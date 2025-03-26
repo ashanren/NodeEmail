@@ -1,5 +1,0 @@
-FROM node:lts-alpine
-
-WORKDIR /home/email
-RUN apk --no-cache update && apk --no-cache upgrade && apk --no-cache --update add vim curl git
-ENTRYPOINT [ "/bin/ash" ]
