@@ -1,1 +1,1 @@
-Email service with gui Dashboard.
+Email service.
